@@ -1,0 +1,10 @@
+{
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol when developing local packages",
+      "dependencies": ["@pongstr/eslint-config", "@pongstr/database","@pongstr/typescript-config" ],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "workspace:*"
+    }
+  ]
+}

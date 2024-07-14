@@ -1,0 +1,39 @@
+{
+  "name": "promortyus",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write .",
+    "sync:list": "syncpack list-mismatches",
+    "sync:fix": "syncpack fix-mismatches",
+    "sync:update": "syncpack update",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/pongstr/promortyus.git"
+  },
+  "author": "@pongstr",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.0.11",
+    "prettier": "^3.3.3",
+    "syncpack": "^12.3.3",
+    "turbo": "^2.0.6"
+  },
+  "packageManager": "pnpm@9.5.0+sha256.dbdf5961c32909fb030595a9daa1dae720162e658609a8f92f2fa99835510ca5",
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "8"
+      }
+    }
+  }
+}
