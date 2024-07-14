@@ -5,7 +5,17 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT", ".env*"],
       "outputs": [".svelte-kit/**", ".vercel/**"],
-      "env": []
+      "env": [
+        "BOT_PORT",
+        "BOT_HOST",
+        "POSTGRES_URL",
+        "POSTGRES_USER",
+        "POSTGRES_HOST",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_DATABASE",
+        "TG_API",
+        "TG_TOKEN"
+      ]
     },
     "lint": {},
     "dev": {
