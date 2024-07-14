@@ -1,10 +1,10 @@
-import * as schema from './schema'
-import { resolve } from 'path'
-import { Logger } from './utils'
-import { drizzle } from 'drizzle-orm/vercel-postgres'
 import { sql } from '@vercel/postgres'
-
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
+import { drizzle } from 'drizzle-orm/vercel-postgres'
+import { resolve } from 'path'
+
+import * as schema from './schema'
+import { Logger } from './utils'
 
 const migrationsFolder = resolve(__dirname, 'migrations')
 

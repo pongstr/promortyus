@@ -1,0 +1,26 @@
+{
+  "extends": "@pongstr/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "allowJs": true,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "lib": ["es2022"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": [
+    "**/tmp/",
+    "**/dist/**/*",
+    "node_modules/**/*",
+    "./.eslintrc.cjs",
+    "./drizzle.config.ts"
+  ]
+}
