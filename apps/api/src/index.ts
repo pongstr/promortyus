@@ -3,7 +3,8 @@ import fastify from 'fastify'
 import db, { env } from '@/db'
 import { appMiddleware, jwtMiddleware } from '@/middleware'
 import { rootRoute } from '@/routes'
-import { webhook } from '@/utils'
+import { botRoute } from '@/routes/bot-route'
+import { BOT_ENDPOINT, webhook } from '@/utils'
 
 const PORT = env.PORT ?? 3000
 const HOST = 'RENDER' in process.env ? '0.0.0.0' : env.HOST
@@ -23,6 +24,7 @@ const main = async () => {
   server.register(appMiddleware)
   server.register(jwtMiddleware)
   server.register(rootRoute)
+  server.register(botRoute, { prefix: BOT_ENDPOINT.pathname })
 
   server.listen({ host: String(HOST), port: PORT }, (error, address) => {
     if (error) {

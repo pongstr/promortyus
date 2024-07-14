@@ -13,7 +13,8 @@
     "lib": ["es2022"],
     "outDir": "./dist",
     "rootDir": "./src",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true
   },
   "include": ["src"],
   "exclude": [
