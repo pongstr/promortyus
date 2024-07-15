@@ -90,6 +90,7 @@ async function responseHandler(request: FastifyRequest) {
             // TODO:
             // we should also query admins from the db and push them here so that newly
             // created admin can actually use the admin comands
+            // fun fact: sudo usermod -aG is a command i can't seem to memorize
             '• /sudo usermod -aG `<TELEGRAM_ID>` `<PASSCODE>` will set yourself as admin.',
           ].join('\n'),
           'Markdown',
