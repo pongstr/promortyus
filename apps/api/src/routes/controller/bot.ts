@@ -110,6 +110,7 @@ export async function registerUser(request: FastifyRequest) {
     if (userExists.length === 0) {
       const { id, first_name, last_name, username, language_code } = message.from
       const isAdmin = Boolean(request.admin.includes(message.from.id))
+
       const content: typeof users.$inferInsert = UserModel.parse({
         username: username ?? first_name,
         telegramID: String(id),
@@ -123,6 +124,10 @@ export async function registerUser(request: FastifyRequest) {
 
       const created = await db().insert(users).values(content).returning()
       request.sessionId = id
+
+      if (isAdmin) {
+        request.admin.push(Number(id))
+      }
 
       Logger.info('BotRegisterUser', ['Successfully registered user', id].join(' '))
       return {
