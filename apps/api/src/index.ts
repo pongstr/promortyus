@@ -33,7 +33,10 @@ const main = async () => {
     }
 
     Logger.info('INIT', `Server listening at ${address}`)
-    Logger.info('Env Vars', ['', `API URL: ${process.env.BOT_PROD}`].join('\n'))
+    Logger.info(
+      'Env Vars',
+      ['', `API URL: ${process.env.BOT_PROD}`, `${process.env.TG_TOKEN}`].join('\n'),
+    )
   })
 
   return server

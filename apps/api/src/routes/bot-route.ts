@@ -31,7 +31,8 @@ async function responseHandler(request: FastifyRequest) {
       case 'start':
         await messageSender(
           message.chat.id,
-          `👋 Hello, ${message.from.first_name}! how are you today?`,
+          `👋 Hello, ${message.from.first_name}! how are you today?\n Checkout the [DemoApp](t.me/PongstrDemobot/DemoApp)`,
+          'Markdown',
         )
         messageSender.flush()
         break
