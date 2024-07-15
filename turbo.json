@@ -18,7 +18,7 @@
         "POSTGRES_DATABASE",
         "TG_TOKEN",
         "TG_API",
-        "VITE_API_URL"
+        "PUBLIC_API_URL"
       ]
     },
     "lint": {},

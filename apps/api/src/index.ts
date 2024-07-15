@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 
-import db, { env } from '@/db'
+import db, { env, Logger } from '@/db'
 import { appMiddleware, jwtMiddleware } from '@/middleware'
 import { rootRoute } from '@/routes'
 import { botRoute } from '@/routes/bot-route'
@@ -28,11 +28,12 @@ const main = async () => {
 
   server.listen({ host: String(HOST), port: PORT }, (error, address) => {
     if (error) {
-      console.error('INIT', error.message)
+      Logger.error('INIT', error.message)
       throw new Error(error.message)
     }
 
-    console.info('INIT', `Server listening at ${address}`)
+    Logger.info('INIT', `Server listening at ${address}`)
+    Logger.info('Env Vars', ['', `API URL: ${process.env.BOT_PROD}`].join('\n'))
   })
 
   return server

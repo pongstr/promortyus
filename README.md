@@ -15,6 +15,8 @@ $ git clone git@github.com:pongstr/goose.git; pnpm install
 ## create an .env file for the api service
 ## and fill in the blanks
 $ cat > ./apps/api/.env << EOF
+# these variables has to be added to `turbo.json#tasks.build.env`
+
 
 ## grab a bot token from BotFather
 TG_TOKEN=...
@@ -43,14 +45,7 @@ EOF
 ## create an .env file for the web app
 ## and fill in the blanks
 $ cat > ./apps/web/.env << EOF
-## the production URL of api service
-## actually this is hard-coded right now, i can't
-## get Sveltekit `$env/static/public` import to work
-## when deploying to vercel, see these files to change:
-## - apps/web/src/routes/signup/+server.ts#L-6
-## - apps/web/src/routes/profile/+server.ts#L-7
-## - apps/web/src/routes/profile/+page.server.ts#L-7
-## - apps/web/src/routes/+server.ts#L-6
+# this has to be added to `turbo.json#tasks.build.env`
 PUBLIC_API_URL=
 EOF
 

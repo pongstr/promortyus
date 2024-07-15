@@ -1,13 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  // import { PUBLIC_API_URL } from '$env/static/public'
+  import { PUBLIC_API_URL } from '$env/static/public'
 
   import { CheckIcon, FingerprintIcon, HashIcon, XIcon } from 'lucide-svelte'
   import dayjs from 'dayjs'
   import { goto } from '$app/navigation'
   export let data
 
-  const PUBLIC_API_URL = 'https://gram.pongstr.io'
+  // const PUBLIC_API_URL = 'https://gram.pongstr.io'
 
   let showRevalidate = false
   let hasError = false
@@ -48,7 +48,6 @@
       goto('/')
     }
   }
-  console.log(data)
 </script>
 
 <svelte:head>
@@ -114,7 +113,7 @@
         <div class="flex flex-col rounded bg-muted/[0.5] p-4 border">
           <code>{data.user.telegramID}</code>
           <code>*******</code>
-          <code>Created: {dayjs(data.user.createdAt).format('DD.M.YYYY')}</code>
+          <code>Created: {dayjs(data.user.iat * 1000).format('DD.M.YYYY')}</code>
         </div>
 
         {#if tokenIsValid && !hasError}

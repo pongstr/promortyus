@@ -1,9 +1,5 @@
 import { json } from '@sveltejs/kit'
-// FIXME:
-// @ts-ignore i dunno why dafuq the type for this isn't working
-// import { PUBLIC_API_URL } from '$env/static/public'
-
-const PUBLIC_API_URL = 'https://gram.pongstr.io'
+import { PUBLIC_API_URL } from '$env/static/public'
 
 export async function POST({ request, cookies }) {
   const url = new URL('api/signup', PUBLIC_API_URL)

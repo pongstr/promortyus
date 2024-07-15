@@ -1,10 +1,5 @@
-// FIXME:
-// @ts-ignore i dunno why dafuq the type for this isn't working
-// import { PUBLIC_API_URL } from '$env/static/public'
-
+import { PUBLIC_API_URL } from '$env/static/public'
 import { redirect } from '@sveltejs/kit'
-
-const PUBLIC_API_URL = 'https://gram.pongstr.io'
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, cookies }) {
@@ -27,7 +22,7 @@ export async function load({ fetch, cookies }) {
     const res = await req.json()
 
     return {
-      token: res.token,
+      token,
       user: res.data,
     }
   } catch (err: unknown) {
