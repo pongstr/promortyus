@@ -3,12 +3,7 @@ const { resolve } = require('node:path')
 const project = resolve(process.cwd(), 'tsconfig.json')
 
 module.exports = {
-  extends: [
-    'eslint:recommended',
-    'plugin:svelte/recommended',
-    'plugin:svelte/prettier',
-    'turbo',
-  ],
+  extends: ['eslint:recommended', 'plugin:svelte/recommended', 'plugin:svelte/prettier', 'turbo'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   parserOptions: {

@@ -15,9 +15,7 @@ async function responseHandler(request: FastifyRequest) {
   async function authorizationCheck() {
     await messageSender(
       message.chat.id,
-      ["*🤖 Woops! Looks like you're try to access an admin command.\n*"].join(
-        '\n',
-      ),
+      ["*🤖 Woops! Looks like you're try to access an admin command.\n*"].join('\n'),
       'Markdown',
     )
 
@@ -45,12 +43,7 @@ async function responseHandler(request: FastifyRequest) {
           return
         }
 
-        await getUser(
-          request,
-          Number(context.at(1)),
-          true,
-          context.slice(2).join(' '),
-        )
+        await getUser(request, Number(context.at(1)), true, context.slice(2).join(' '))
         break
 
       // admin: list users
@@ -97,7 +90,7 @@ async function responseHandler(request: FastifyRequest) {
             // TODO:
             // we should also query admins from the db and push them here so that newly
             // created admin can actually use the admin comands
-            // '• /sudo usermod -aG `<TELEGRAM_ID>` `<PASSCODE>` will set yourself as admin.',
+            '• /sudo usermod -aG `<TELEGRAM_ID>` `<PASSCODE>` will set yourself as admin.',
           ].join('\n'),
           'Markdown',
         )
@@ -113,12 +106,15 @@ async function responseHandler(request: FastifyRequest) {
 }
 
 // bot endpoint
-export const botRoute = (
-  fastify: FastifyInstance,
-  _: unknown,
-  done: () => void,
-) => {
+export const botRoute = (fastify: FastifyInstance, _: unknown, done: () => void) => {
   fastify.post('/', async (request: FastifyRequest, response: FastifyReply) => {
+    if (request.body && !Reflect.has(request.body, 'message')) {
+      return response.status(400).send({
+        code: 400,
+        message: 'Missing required parameters, please try again.',
+      })
+    }
+
     try {
       await registerUser(request)
       await responseHandler(request)

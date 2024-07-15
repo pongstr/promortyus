@@ -18,7 +18,7 @@ const main = async () => {
   server.register(import('@fastify/cors'), {
     maxAge: 600,
     origin: true,
-    credentials: true,
+    credentials: false,
   })
 
   server.register(appMiddleware)

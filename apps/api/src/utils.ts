@@ -2,9 +2,7 @@ import 'dotenv/config'
 
 import { Logger } from '@/db'
 
-export const TGR_ENDPOINT = new URL(
-  [process.env.TG_API, process.env.TG_TOKEN].join(''),
-)
+export const TGR_ENDPOINT = new URL([process.env.TG_API, process.env.TG_TOKEN].join(''))
 
 export const BOT_ENDPOINT = new URL(
   [process.env.BOT_PROD, 'webhook', process.env.TG_TOKEN].join('/'),

@@ -39,18 +39,13 @@ export type TelegramResponseType = {
 
 dayjs.extend(relativeTime)
 
-const dateFromNow = (date: Date | number | string): string =>
-  dayjs(date).fromNow().toString()
+const dateFromNow = (date: Date | number | string): string => dayjs(date).fromNow().toString()
 
 // #== bot actions
 //
 
 //#== send message utility
-export async function sendMessage(
-  chatId: number,
-  text: string,
-  parse_mode?: string,
-) {
+export async function sendMessage(chatId: number, text: string, parse_mode?: string) {
   const url = new URL(TGR_ENDPOINT)
 
   url.pathname = [url.pathname, 'sendMessage'].join('/')
@@ -78,10 +73,7 @@ export async function sendMessage(
       throw Error(message)
     }
 
-    Logger.info(
-      'BotMessageSender',
-      ['Success', send.status, send.statusText].join('/'),
-    )
+    Logger.info('BotMessageSender', ['Success', send.status, send.statusText].join('/'))
     return await send.json()
   } catch (err: unknown) {
     const message = (err as Error).message
@@ -101,10 +93,7 @@ export async function registerUser(request: FastifyRequest) {
   const { message } = body as unknown as TelegramResponseType
 
   if (request.sessionId === message.from.id) {
-    Logger.info(
-      'BotRegisterUser',
-      [message.from.id, 'is a returning User'].join(' '),
-    )
+    Logger.info('BotRegisterUser', [message.from.id, 'is a returning User'].join(' '))
     return {
       type: 'success',
       message: 'User is returning',
@@ -119,8 +108,7 @@ export async function registerUser(request: FastifyRequest) {
       .where(eq(users.telegramID, Number(message.from.id)))
 
     if (userExists.length === 0) {
-      const { id, first_name, last_name, username, language_code } =
-        message.from
+      const { id, first_name, last_name, username, language_code } = message.from
       const isAdmin = Boolean(request.admin.includes(message.from.id))
       const content: typeof users.$inferInsert = UserModel.parse({
         username: username ?? first_name,
@@ -136,10 +124,7 @@ export async function registerUser(request: FastifyRequest) {
       const created = await db().insert(users).values(content).returning()
       request.sessionId = id
 
-      Logger.info(
-        'BotRegisterUser',
-        ['Successfully registered user', id].join(' '),
-      )
+      Logger.info('BotRegisterUser', ['Successfully registered user', id].join(' '))
       return {
         type: 'successs',
         message: 'New user has been added',
@@ -172,13 +157,12 @@ export async function listUsers(request: FastifyRequest) {
 
   try {
     const collection = await db().select().from(users).limit(100)
-    const userList = collection.map(
-      ({ username, createdAt, telegramID, isAdmin }) =>
-        [
-          `\n\`${telegramID}\` *${username}* ${isAdmin ? '(admin)' : '(member)'}\n`,
-          `Joined ${dateFromNow(createdAt.getTime())}\n`,
-          '---\n',
-        ].join(''),
+    const userList = collection.map(({ username, createdAt, telegramID, isAdmin }) =>
+      [
+        `\n\`${telegramID}\` *${username}* ${isAdmin ? '(admin)' : '(member)'}\n`,
+        `Joined ${dateFromNow(createdAt.getTime())}\n`,
+        '---\n',
+      ].join(''),
     )
 
     const adminCount = collection.filter(({ isAdmin }) => isAdmin).length
@@ -189,17 +173,10 @@ export async function listUsers(request: FastifyRequest) {
       `${memberCount} member${memberCount > 1 ? 's' : ''}\n`,
     ].join(' ')
 
-    await messageSender(
-      message.chat.id,
-      [...stats, ...userList].join(''),
-      'Markdown',
-    )
+    await messageSender(message.chat.id, [...stats, ...userList].join(''), 'Markdown')
   } catch (err: unknown) {
     const errorMessage = (err as Error).message
-    Logger.error(
-      'BotListUsers',
-      ['Failed to list users:', errorMessage].join(' '),
-    )
+    Logger.error('BotListUsers', ['Failed to list users:', errorMessage].join(' '))
     throw new Error(errorMessage)
   }
 }
@@ -259,10 +236,7 @@ export async function getUser(
 }
 
 // #== action to set a standard member to admin
-export async function setAdminUser(
-  request: FastifyRequest,
-  params: [number, number],
-) {
+export async function setAdminUser(request: FastifyRequest, params: [number, number]) {
   const { db } = request
   const { message } = request.body as unknown as TelegramResponseType
 
@@ -274,15 +248,10 @@ export async function setAdminUser(
       .where(eq(users.telegramID, params.at(0)))
 
     if (user.length === 0) {
-      Logger.info(
-        'BotSetAdminUser',
-        ["Can't find user with id:", params.at(0)].join(' '),
-      )
+      Logger.info('BotSetAdminUser', ["Can't find user with id:", params.at(0)].join(' '))
       await messageSender(
         message.chat.id,
-        [
-          `Cannot set \`user: ${params.at(0)}\` they have to subscribe to the bot first.`,
-        ].join(' '),
+        [`Cannot set \`user: ${params.at(0)}\` they have to subscribe to the bot first.`].join(' '),
         'Markdown',
       )
       return
@@ -291,18 +260,12 @@ export async function setAdminUser(
     if (params.at(1) && !request.admin.includes(Number(params.at(1)))) {
       Logger.info(
         'BotSetAdminUser',
-        [
-          "Can't set user with id:",
-          params.at(0),
-          'the passcode is incorrect.',
-        ].join(' '),
+        ["Can't set user with id:", params.at(0), 'the passcode is incorrect.'].join(' '),
       )
 
       await messageSender(
         message.chat.id,
-        [
-          `Cannot set \`user: ${params.at(0)}\` the passcode is incorrect.`,
-        ].join(' '),
+        [`Cannot set \`user: ${params.at(0)}\` the passcode is incorrect.`].join(' '),
         'Markdown',
       )
       return
@@ -318,9 +281,7 @@ export async function setAdminUser(
     if (!setAdmin) {
       Logger.info(
         'BotSetAdminUser',
-        ["Can't set user with id:", params.at(0), 'an error has occured.'].join(
-          ' ',
-        ),
+        ["Can't set user with id:", params.at(0), 'an error has occured.'].join(' '),
       )
       return
     }
