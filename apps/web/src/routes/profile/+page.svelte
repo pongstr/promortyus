@@ -7,8 +7,6 @@
   import { goto } from '$app/navigation'
   export let data
 
-  // const PUBLIC_API_URL = 'https://gram.pongstr.io'
-
   let showRevalidate = false
   let hasError = false
   let tokenIsValid: string | undefined
@@ -58,11 +56,13 @@
   class="md:min-w-[700px] flex justify-center items-center max-w-5xl p-4 border rounded-lg md:min-h-[60vh]"
 >
   <div>
-    <div class="flex justify-center items-center gap-1">
-      <HashIcon class="size-5 text-muted-foreground" />
-      <span class="text-muted-foreground">Telegram ID:</span>
-      <code class="text-xl ml-3">{data.user.telegramID}</code>
-    </div>
+    {#if data.user}
+      <div class="flex justify-center items-center gap-1">
+        <HashIcon class="size-5 text-muted-foreground" />
+        <span class="text-muted-foreground">Telegram ID:</span>
+        <code class="text-xl ml-3">{data.user.telegramID}</code>
+      </div>
+    {/if}
 
     {#if showRevalidate}
       <form class="space-y-4 py-4 md:min-w-[420px]" on:submit|preventDefault={validate}>

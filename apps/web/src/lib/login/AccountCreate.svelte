@@ -11,6 +11,13 @@
       }
     | undefined
 
+  export let feedback:
+    | {
+        hasError: boolean
+        message: string
+      }
+    | undefined = undefined
+
   const dispatch = createEventDispatcher()
   let showPassword = false
   let showComfirm = false
@@ -178,6 +185,12 @@
       </button>
     </div>
   </div>
+
+  {#if feedback && feedback.hasError}
+    <div class="border border-red-600 rounded bg-red-900 p-4 text-red-100 text-xs">
+      {feedback.message}
+    </div>
+  {/if}
 
   <div class="space-y-4 pt-4">
     <button

@@ -8,5 +8,5 @@ export async function load({ cookies }) {
     return
   }
 
-  redirect(307, '/profile')
+  throw redirect(307, '/profile')
 }

@@ -47,6 +47,7 @@ export const rootRoute = (fastify: FastifyInstance, _: unknown, done: () => void
       }
 
       const { telegramID, password } = payload
+
       const user = await request.db().query.users.findFirst({
         // @ts-ignore https://github.com/drizzle-team/drizzle-orm/pull/1792
         where: (users, { eq }) => eq(users.telegramID, telegramID),
@@ -101,8 +102,8 @@ export const rootRoute = (fastify: FastifyInstance, _: unknown, done: () => void
           // before it subscribes to the bot, make sure to add a mechanism
           // in the bot.registerUser() to update these values when they
           // decide to subscribe
-          UserModel.parse({
-            username: '',
+          {
+            username: String(telegramID),
             firstName: '',
             lastName: '',
             languageCode: 'en',
@@ -111,7 +112,7 @@ export const rootRoute = (fastify: FastifyInstance, _: unknown, done: () => void
             createdAt: new Date(),
             updatedAt: new Date(),
             isAdmin: false,
-          }),
+          },
         )
         .returning()
 
@@ -161,7 +162,7 @@ export const rootRoute = (fastify: FastifyInstance, _: unknown, done: () => void
 
     const user = await request.db().query.users.findFirst({
       // @ts-ignore https://github.com/drizzle-team/drizzle-orm/pull/1792
-      where: (users, { eq }) => eq(users.telegramID, payload.telegramID),
+      where: (users, { eq }) => eq(users.telegramID, String(payload.telegramID)),
     })
 
     if (!user || !user.password) {

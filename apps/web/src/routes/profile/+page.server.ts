@@ -21,6 +21,13 @@ export async function load({ fetch, cookies }) {
 
     const res = await req.json()
 
+    if (typeof res === 'object' && Reflect.has(res.data, '0')) {
+      return {
+        token,
+        user: { ...res.data['0'], iat: res.data.iat },
+      }
+    }
+
     return {
       token,
       user: res.data,

@@ -1,7 +1,7 @@
 import { PUBLIC_API_URL } from '$env/static/public'
 import { redirect } from '@sveltejs/kit'
 
-export async function PUT({ request }) {
+export async function POST({ request }) {
   const url = new URL('api/validate', PUBLIC_API_URL)
   try {
     const token = await request.json()
@@ -19,7 +19,6 @@ export async function PUT({ request }) {
       user: res.data[0],
     }
   } catch (err: unknown) {
-    console.log('er', err)
     throw redirect(307, '/')
   }
 }

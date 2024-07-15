@@ -33,7 +33,7 @@
       }
       goto('/profile?login=true')
     } catch (err: unknown) {
-      console.log(err)
+      console.error(err)
     }
   }
 </script>

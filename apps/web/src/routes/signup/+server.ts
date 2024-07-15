@@ -6,6 +6,14 @@ export async function POST({ request, cookies }) {
 
   try {
     const body = await request.json()
+
+    if (body.password.trim() !== body.confirmPassword.trim()) {
+      return json(
+        { status: 400, message: "Passwords don't match" },
+        { status: 400, statusText: "Passwords don't match" },
+      )
+    }
+
     const req = await fetch(url.href, {
       method: 'POST',
       body: JSON.stringify(body),

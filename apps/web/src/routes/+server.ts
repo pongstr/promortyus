@@ -6,6 +6,7 @@ export async function POST({ request, cookies }) {
 
   try {
     const body = await request.json()
+
     const req = await fetch(url.href, {
       method: 'POST',
       body: JSON.stringify(body),
